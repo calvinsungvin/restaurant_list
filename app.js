@@ -2,39 +2,101 @@ const express = require('express')
 const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json')
+const Restaurant = require('./models/restaurant')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+//Mongoose Setup
+mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true, useUnifiedTopology: true })
+const db = mongoose.connection
+db.on('error', () => {
+  console.log('mongodb error!')
+})
+db.once('open', () => {
+  console.log('mongodb connected!')
+})
 
+//handlebars setup
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+//bodyparser setup
+app.use(bodyParser.urlencoded({ extended: true }))
+//static files setup
+app.use(express.static('public'))
 
-// routes setting
+// showing homepage
 app.get('/', (req, res) => {
- res.render('index', {restaurants: restaurantList.results})
+  Restaurant.find()
+    .lean()
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.error(error))
 })
 
+app.get('/restaurants/new', (req, res) => {
+  return res.render('new')
+})
 
+//Create
+app.post('/create', (req, res) => {
+  if (req.body.image.length === 0) {
+    req.body.image =
+      'https://www.teknozeka.com/wp-content/uploads/2020/03/wp-header-logo-33.png'
+  }
+  const restaurant = req.body
+  return Restaurant.create(restaurant)
+    .then(() => res.redirect('/'))
+    .catch((error) => console.error(error))
+})
 
-  app.get('/restaurants/:r_id', (req, res) => {
-    const restaurant = restaurantList.results.find(r => r.id.toString() === req.params.r_id)
-    res.render('show', { r: restaurant })
-  })
+//Show Details
+app.get('/restaurants/:id', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('show', { restaurant }))
+    .catch((error) => console.error(error))
+})
 
-//   app.get('/search', (res, req) => {
-//       const keyword = req.query.keyword
-//       const r = restaurantList.results.filter((r) => {
-//           return r.name.toLowerCase().includes(req.query.keyword.toLowerCase())
-//       })
-//       res.render('index', {restaurants: restaurantList.results, keyword})
-//   })
+//Update (Get)
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurant) => res.render('edit', { restaurant }))
+    .catch((error) => console.error(error))
+})
 
+//Update (Post)
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then((restaurant) => {
+      restaurant = Object.assign(restaurant, req.body)
+      // console.log(req.body)
+      return restaurant.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch((error) => console.error(error))
+})
+
+//Delete
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then((restaurant) => restaurant.remove())
+    .then(() => res.redirect('/'))
+    .catch((error) => console.error(error))
+})
+
+// Search
 app.get('/search', (req, res) => {
     const keyword = req.query.keyword
-    const restaurants = restaurantList.results.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()))
-    res.render('index', { restaurants, keyword })
+    Restaurant.find({ name: { $regex: keyword, $options: "i" } })
+    .lean()
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.log(error))
   })
 
-  app.use(express.static('public'))
 
 // start and listen on the Express server
 app.listen(port, () => {
