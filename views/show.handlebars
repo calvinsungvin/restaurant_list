@@ -50,7 +50,7 @@
       <img class="rounded mx-auto d-block mb-4 w-100" src={{restaurant.image}} alt={{restaurant.name}}
         style="max-width: 600px;">
       <a href="/restaurants/{{ restaurant._id }}/edit" class="btn btn-primary mr-3">修改</a>
-      <form action="/restaurants/{{ restaurant._id }}/delete" method="post" style="display: inline;">
+      <form action="/restaurants/{{ restaurant._id }}?_method=DELETE" method="post" style="display: inline;">
         <button class="btn btn-danger mr-3" type="submit">刪除</button>
       </form>
 
