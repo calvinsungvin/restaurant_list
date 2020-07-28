@@ -67,6 +67,16 @@ body {
   outline: 0 !important;
 }
 
+.search-bar {
+  position: relative;
+}
+.sort-button {
+  position: absolute;
+  left: 5 px;
+  padding: -20px;
+  margin: -10px;
+}
+
 hr {
   box-sizing: content-box;
   height: 0;
