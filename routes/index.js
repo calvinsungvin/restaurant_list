@@ -4,6 +4,7 @@ const router = express.Router()
 const home = require('./modules/home')
 const restaurants = require('./modules/restaurants')
 const sort = require('./modules/sort')
+const search = require('./modules/search')
 
 // 將網址結構符合 / 字串的 request 導向 home.js 模組
 router.use('/', home)
@@ -11,5 +12,7 @@ router.use('/', home)
 router.use('/restaurants', restaurants)
 // 將網址結構符合 /sort 字串開頭的 request 導向 sort.js 模組
 router.use('/sort', sort)
+// 將網址結構符合 /search 字串開頭的 request 導向 search.js 模組
+router.use('/search', search)
 
 module.exports = router

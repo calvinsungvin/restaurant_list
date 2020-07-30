@@ -10,14 +10,10 @@ router.get('/new', (req, res) => {
   
   //Create
   router.post('/create', (req, res) => {
-    if (req.body.image.length === 0) {
-      req.body.image =
-        'https://www.teknozeka.com/wp-content/uploads/2020/03/wp-header-logo-33.png'
-    }
     const restaurant = req.body
     return Restaurant.create(restaurant)
-      .then(() => res.redirect('/'))
-      .catch((error) => console.error(error))
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
   })
   
   //Show Details
@@ -58,17 +54,6 @@ router.get('/new', (req, res) => {
       .then(() => res.redirect('/'))
       .catch((error) => console.error(error))
   })
-  
-  // Search
-  router.get('/search', (req, res) => {
-      const keyword = req.query.keyword
-      console.log(req.query)
-      console.log(keyword)
-      Restaurant.find({ name: { $regex: keyword, $options: "i" } })
-      .lean()
-      .then(restaurants => res.render('index', { restaurants }))
-      .catch(error => console.log(error))
-    })
   
 
 
