@@ -23,12 +23,12 @@
 6. 透過餐廳名字、地址、餐廳分類，去排序餐廳
 
 ## 開發環境
-Node.js v10.15.0
-Express v4.17.1
-Express-Handlebars v4.0.4
-Body-parser: v1.19.0
-mongoose: v5.9.14
-method-override: v3.0.0
+1. Node.js v10.15.0
+2. Express v4.17.1
+3. Express-Handlebars v4.0.4
+4. Body-parser: v1.19.0
+5. mongoose: v5.9.14
+6. method-override: v3.0.0
 
 ## 截圖
 ![image info](picture.png)
