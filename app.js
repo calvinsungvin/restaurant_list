@@ -5,12 +5,18 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const routes = require('./routes')
+const session = require('express-session')
 require('./config/mongoose')
 
 //handlebars setup
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
+app.use(session({
+  secret: "This is my secret",
+  resave: false,
+  saveUninitialized: true
+}))
 //bodyparser setup
 app.use(bodyParser.urlencoded({ extended: true }))
 //static files setup
