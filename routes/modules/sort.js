@@ -16,7 +16,7 @@ router.get('/:option/:sort', (req, res) => {
   const selected = `${name}${sort}`
   Restaurant.find()
     .lean()
-    .sort({ [name]: sort })
+    .sort({ name: sort })
     .then(restaurants => res.render('index', { restaurants, sortby: sortby[selected] }))
     .catch(error => console.log(error))
 })
