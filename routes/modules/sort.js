@@ -11,10 +11,11 @@ router.get('/:option/:sort', (req, res) => {
     categoryasc: '類別',
     locationasc: '地區'
   }
+  const userId = req.user._id
   const name = req.params.option
   const sort = req.params.sort
   const selected = `${name}${sort}`
-  Restaurant.find()
+  Restaurant.find({ userId })
     .lean()
     .sort({ name: sort })
     .then(restaurants => res.render('index', { restaurants, sortby: sortby[selected] }))
