@@ -45,4 +45,4 @@
 13. passport-local: 1.0.0
 
 ## 截圖
-![image info](picture1.png)
+![image info](resPic.png)
