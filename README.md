@@ -1,6 +1,6 @@
 # 餐廳列表
 
-一個使用 Node.js + Express 打造的餐廳美食網站，此專案提供使用者查看餐廳訊息，並可透過餐廳名稱尋找餐廳資訊，例如:餐廳類別、地址、評分、描述等
+一個使用 Node.js + Express 打造的餐廳美食網站，串接驗證系統及第三方登入，提供用戶擁有自己的美食口袋名單
 
 ## 安裝方式
 - 將專案clone到本地端
@@ -23,13 +23,26 @@
 6. 透過餐廳名字、地址、餐廳分類，去排序餐廳
 7. 登入、登出、註冊
 
+## 種子資料
+| Account | Password |
+| ------ | ------ |
+| user1@example.com | 12345678|
+| user2@example.com | [12345678 |
+
 ## 開發環境
-1. Node.js v10.15.0
-2. Express v4.17.1
-3. Express-Handlebars v4.0.4
-4. Body-parser: v1.19.0
-5. mongoose: v5.9.14
-6. method-override: v3.0.0
+1. bcryptjs: 2.4.3
+2. body-parser: 1.19.0
+3. connect-flash: 0.1.1
+4. dotenv: 8.2.0
+5. express: 4.17.1
+6. express-handlebars: 5.0.0
+7. express-session: 1.17.1
+8. method-override: 3.0.0
+9. mongoose: 5.9.25
+10. multer: 1.4.2
+11. passport: 0.4.1
+12. passport-facebook: 3.0.0
+13. passport-local: 1.0.0
 
 ## 截圖
 ![image info](picture.png)
