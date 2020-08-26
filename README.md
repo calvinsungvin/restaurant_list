@@ -27,7 +27,7 @@
 | Account | Password |
 | ------ | ------ |
 | user1@example.com | 12345678|
-| user2@example.com | [12345678 |
+| user2@example.com | 12345678 |
 
 ## 開發環境
 1. bcryptjs: 2.4.3
